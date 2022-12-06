@@ -15,6 +15,6 @@ def apply_filter(file: object, filter: str) -> object:
     image = image.filter(eval(f"ImageFilter.{filter.upper()}"))
     file = io.BytesIO()
     image.save(file, "JPEG")
-    file.seek(o)
+    file.seek(0)
 
     return file
