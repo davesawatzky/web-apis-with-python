@@ -20,36 +20,21 @@ filters_available = [
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    """
-    TODO:
-    1. Return the usage instructions that
-    a) specifies which filters are available, and
-    b) the method format
-    """
     response = {
        "filters_available": filters_available,
        "usage": {"http_method": "POST", "URL": "/<filter_available>/"},
        }
     return jsonify(response)
 
-
 @app.post("/<filter>")
 def image_filter(filter):
-    """
-    TODO:
-    1. Checks if the provided filter is available, if not, return an error
-    2. Check if a file has been provided in the POST request, if not return an error
-    3. Apply the filter using apply_filter() method from bin.filters
-    4. Return the filtered image as response
-    """
+
     if filter not in filters_available:
         response = {"error":"incorrect filter"}
         return jsonify(response)
 
     file = request.files["image"]
-
     if not file:
-
         response = {"error":"no file provided"}
         return jsonify(response)
 
