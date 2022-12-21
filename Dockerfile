@@ -24,4 +24,7 @@ RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requ
 # Change user to vscode
 USER vscode:vscode
 
+ENTRYPOINT [ "python3" ]
+CMD [ "app.py" ]
+
 # COPY * /workspaces/image-filter-api-python-flask/
