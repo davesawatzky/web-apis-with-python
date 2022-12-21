@@ -9,10 +9,14 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 #ARG NODE_VERSION="lts/*"
 #RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 COPY requirements.txt /tmp/pip-tmp/
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
     && rm -rf /tmp/pip-tmp
+
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -23,5 +27,7 @@ RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requ
 
 # Change user to vscode
 USER vscode:vscode
-
+RUN source ./env/bin/activate
+ENTRYPOINT [ "python3" ]
+CMD [ "app.py" ]
 # COPY * /workspaces/image-filter-api-python-flask/
